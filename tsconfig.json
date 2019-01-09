@@ -1,11 +1,19 @@
 {
     "compilerOptions": {
-        "noImplicitAny": true
+        "module": "commonjs",
+        "target": "es5",
+        "moduleResolution": "node",
+        "declaration": true,
+        "outDir": "./dist",
+        "rootDir": "./",
+        "removeComments": true,
+        "noUnusedLocals": true,
+        "noImplicitAny": true,
+        "lib": ["es2015", "dom"],
+        "baseUrl": "./"
     },
-    "include": [
-        "src/**/*"
-    ],
     "exclude": [
-        "node_modules/**/*"
+        "node_modules",
+        "dist"
     ]
 }

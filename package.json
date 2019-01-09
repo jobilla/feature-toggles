@@ -1,5 +1,22 @@
 {
-    "name": "@jobilla/feature-toggle",
+    "name": "@jobilla/feature-toggles",
     "license": "MIT",
-    "author": "Leo Sjöberg <leo@jobilla.com>"
+    "author": "Leo Sjöberg <leo@jobilla.com>",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "tsc"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/jobilla/feature-toggles"
+    },
+    "keywords": [
+        "feature",
+        "toggle",
+        "typescript"
+    ],
+    "devDependencies": {
+        "typescript": "^2.0"
+    }
 }
