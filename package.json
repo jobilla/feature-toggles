@@ -1,22 +1,29 @@
 {
-    "name": "@jobilla/feature-toggles",
-    "license": "MIT",
-    "author": "Leo Sjöberg <leo@jobilla.com>",
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
-    "scripts": {
-        "build": "tsc"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/jobilla/feature-toggles"
-    },
-    "keywords": [
-        "feature",
-        "toggle",
-        "typescript"
-    ],
-    "devDependencies": {
-        "typescript": "^2.0"
-    }
+  "name": "@jobilla/feature-toggles",
+  "license": "MIT",
+  "author": "Leo Sjöberg <leo@jobilla.com>",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jobilla/feature-toggles.git"
+  },
+  "keywords": [
+    "feature",
+    "toggle",
+    "typescript"
+  ],
+  "devDependencies": {
+    "typescript": "^2.0"
+  },
+  "description": "This is a library for use in JavaScript and TypeScript applications to allow you to conditionally execute code/show some parts of your frontend depending on if a feature is enabled or not.",
+  "bugs": {
+    "url": "https://github.com/jobilla/feature-toggles/issues"
+  },
+  "homepage": "https://github.com/jobilla/feature-toggles#readme",
+  "version": "1.0.0",
+  "dependencies": {}
 }
