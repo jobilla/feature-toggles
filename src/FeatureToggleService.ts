@@ -3,9 +3,9 @@ export interface Feature {
     name?: string;
 }
 
-export class FeatureToggleService {
-    protected features = new Map<string, string>();
+const features = new Map<string, string>();
 
+export class FeatureToggleService {
     protected localStoragePrefix = '_feature';
 
     constructor() {
@@ -17,7 +17,7 @@ export class FeatureToggleService {
             feature.name = feature.key;
         }
 
-        this.features.set(feature.key, feature.name);
+        features.set(feature.key, feature.name);
 
         // If the toggle doesn't exist in localStorage yet, we'll set it
         // to be disabled – this makes it a lot easier to then enable
@@ -28,13 +28,14 @@ export class FeatureToggleService {
     }
 
     check(featureKey: string): boolean {
-        if (!this.features.has(featureKey)) {
+        if (!features.has(featureKey)) {
             console.warn(`The feature ${featureKey} has not been registered`);
 
             return false;
         }
 
-        return JSON.parse(localStorage.getItem(this.localStorageKey(featureKey))).enabled;
+        const localStorageData = localStorage.getItem(this.localStorageKey(featureKey));
+        return localStorageData === null ? false : JSON.parse(localStorageData).enabled;
     }
 
     private localStorageKey(featureKey: string): string {
