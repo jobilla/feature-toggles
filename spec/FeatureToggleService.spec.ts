@@ -1,4 +1,4 @@
-import { FeatureToggleService } from '../src/FeatureToggleService';
+import { FeatureToggleService } from 'src/FeatureToggleService';
 
 describe('Feature toggling', () => {
     beforeEach(() => {
@@ -17,6 +17,24 @@ describe('Feature toggling', () => {
             name: 'Foo',
             enabled: false,
         });
+    });
+
+    it('can deregister a feature', () => {
+        const service = new FeatureToggleService();
+
+        service.register({
+            name: 'Foo',
+            key: 'foo',
+        });
+
+        expect(JSON.parse(localStorage.getItem('_feature.foo'))).toEqual({
+            name: 'Foo',
+            enabled: false,
+        });
+
+        service.deregister('foo');
+
+        expect(localStorage.getItem('_feature.foo')).toBe(null);
     });
 
     it('will not write to localStorage on registration if the key is already set', () => {

@@ -27,6 +27,17 @@ export class FeatureToggleService {
         }
     }
 
+    deregister(featureKey: string) {
+        if (!features.has(featureKey)) {
+            console.warn(`The feature ${featureKey} has not been registered`);
+
+            return false;
+        }
+
+        features.delete(featureKey);
+        localStorage.removeItem(this.localStorageKey(featureKey));
+    }
+
     check(featureKey: string): boolean {
         if (!features.has(featureKey)) {
             console.warn(`The feature ${featureKey} has not been registered`);
