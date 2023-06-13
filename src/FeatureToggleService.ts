@@ -12,7 +12,13 @@ export class FeatureToggleService {
         localStorage.setItem('_feature._enabled', JSON.stringify(true));
     }
 
-    static clearFeatureList() {
+    /**
+     * Clears the internal feature list. This only exists to be used in tests.
+     * Do not use in production code. No really, don't.
+     *
+     * @private
+     */
+    static clearInternalFeatureList() {
         features.clear();
     }
 

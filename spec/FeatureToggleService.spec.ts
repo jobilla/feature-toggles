@@ -3,7 +3,7 @@ import { FeatureToggleService } from '../src/FeatureToggleService';
 describe('Feature toggling', () => {
     beforeEach(() => {
         localStorage.clear();
-        FeatureToggleService.clearFeatureList();
+        FeatureToggleService.clearInternalFeatureList();
     });
 
     it('can register a feature', () => {
