@@ -12,6 +12,16 @@ export class FeatureToggleService {
         localStorage.setItem('_feature._enabled', JSON.stringify(true));
     }
 
+    /**
+     * Clears the internal feature list. This only exists to be used in tests.
+     * Do not use in production code. No really, don't.
+     *
+     * @private
+     */
+    static clearInternalFeatureList() {
+        features.clear();
+    }
+
     register(feature: Feature) {
         if (!feature.name) {
             feature.name = feature.key;
@@ -25,6 +35,29 @@ export class FeatureToggleService {
         if (localStorage.getItem(this.localStorageKey(feature.key)) === null) {
             localStorage.setItem(this.localStorageKey(feature.key), JSON.stringify({ name: feature.name, enabled: false }));
         }
+    }
+
+    /**
+     * This method is used to tidy up localStorage. It will remove any features
+     * that are no longer registered.
+     *
+     * You should only call this method after registering all features.
+     */
+    tidyUpLocalStorageData() {
+        const registeredFeatures = Array.from(features.keys());
+        const keysInLocalStorage = Object.keys(localStorage)
+            .filter(key =>
+                key.startsWith(this.localStoragePrefix) &&
+                key !== `${this.localStoragePrefix}._enabled`
+            );
+
+        keysInLocalStorage.forEach(key => {
+           const feature = key.replace(`${this.localStoragePrefix}.`, '');
+
+           if (registeredFeatures.indexOf(feature) === -1) {
+               localStorage.removeItem(key);
+           }
+        });
     }
 
     check(featureKey: string): boolean {

@@ -3,6 +3,7 @@ import { FeatureToggleService } from '../src/FeatureToggleService';
 describe('Feature toggling', () => {
     beforeEach(() => {
         localStorage.clear();
+        FeatureToggleService.clearInternalFeatureList();
     });
 
     it('can register a feature', () => {
@@ -32,7 +33,7 @@ describe('Feature toggling', () => {
         expect(JSON.parse(localStorage.getItem('_feature.foo')).enabled).toBe(true);
     });
 
-    it('it considers a feature disabled if it is not set to on', () => {
+    it('considers a feature disabled if it is not set to on', () => {
         const service = new FeatureToggleService();
 
         service.register({
@@ -43,7 +44,7 @@ describe('Feature toggling', () => {
         expect(service.check('foo')).toBe(false);
     });
 
-    it('it considers a feature disabled if the localStorage key is missing', () => {
+    it('considers a feature disabled if the localStorage key is missing', () => {
         const service = new FeatureToggleService();
 
         service.register({
@@ -56,7 +57,7 @@ describe('Feature toggling', () => {
         expect(service.check('foo')).toBe(false);
     });
 
-    it('it considers a feature enabled if it is set to on', () => {
+    it('considers a feature enabled if it is set to on', () => {
         const service = new FeatureToggleService();
 
         service.register({
@@ -70,5 +71,24 @@ describe('Feature toggling', () => {
         }));
 
         expect(service.check('foo')).toBe(true);
+    });
+
+    describe('tidyUp method', () => {
+        it('removes the features that is not registered from localStorage', () => {
+            localStorage.setItem('_feature.some_old_feature', JSON.stringify({
+                name: 'Old feature that we will no longer register',
+                enabled: true,
+            }));
+
+            const service = new FeatureToggleService();
+            service.register({
+                name: 'Some new feature',
+                key: 'some_new_feature',
+            });
+
+            service.tidyUpLocalStorageData();
+
+            expect(localStorage.getItem('_feature.some_old_feature')).toBeNull();
+        });
     });
 });
