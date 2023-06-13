@@ -12,6 +12,10 @@ export class FeatureToggleService {
         localStorage.setItem('_feature._enabled', JSON.stringify(true));
     }
 
+    static clearFeatureList() {
+        features.clear();
+    }
+
     register(feature: Feature) {
         if (!feature.name) {
             feature.name = feature.key;
@@ -25,6 +29,23 @@ export class FeatureToggleService {
         if (localStorage.getItem(this.localStorageKey(feature.key)) === null) {
             localStorage.setItem(this.localStorageKey(feature.key), JSON.stringify({ name: feature.name, enabled: false }));
         }
+    }
+
+    tidyUp() {
+        const registeredFeatures = Array.from(features.keys());
+        const keysInLocalStorage = Object.keys(localStorage)
+            .filter(key =>
+                key.startsWith(this.localStoragePrefix) &&
+                key !== `${this.localStoragePrefix}._enabled`
+            );
+
+        keysInLocalStorage.forEach(key => {
+           const feature = key.replace(`${this.localStoragePrefix}.`, '');
+
+           if (registeredFeatures.indexOf(feature) === -1) {
+               localStorage.removeItem(key);
+           }
+        });
     }
 
     check(featureKey: string): boolean {
