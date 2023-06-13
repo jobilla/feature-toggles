@@ -86,7 +86,7 @@ describe('Feature toggling', () => {
                 key: 'some_new_feature',
             });
 
-            service.tidyUp();
+            service.tidyUpLocalStorageData();
 
             expect(localStorage.getItem('_feature.some_old_feature')).toBeNull();
         });

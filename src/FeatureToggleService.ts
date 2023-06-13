@@ -37,7 +37,13 @@ export class FeatureToggleService {
         }
     }
 
-    tidyUp() {
+    /**
+     * This method is used to tidy up localStorage. It will remove any features
+     * that are no longer registered.
+     *
+     * You should only call this method after registering all features.
+     */
+    tidyUpLocalStorageData() {
         const registeredFeatures = Array.from(features.keys());
         const keysInLocalStorage = Object.keys(localStorage)
             .filter(key =>
